@@ -87,31 +87,47 @@ def depthFirstSearch(problem: SearchProblem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    # print("Start:", problem.getStartState())
-    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    # BELOW IS CS202 IMPLEMENTATION BUT DOESN'T WORK
+    # firstState = problem.getStartState()
+    # stack = util.Stack()
+    # stack.push((firstState, []))
+    # visited = [firstState]
+
+    # while not stack.isEmpty():
+    #     curState, actions = stack.pop()
+    #     stack.push((curState, actions))
+
+    #     if problem.isGoalState(curState):
+    #         return actions
+
+    #     successorFlag = False
+    #     for successor, action, stepCost in problem.getSuccessors(curState):
+    #         if successor not in visited:
+    #             stack.push((successor, actions + [action]))
+    #             visited = visited + [successor]
+    #             successorFlag = True
+    #             break
+
+    #     if not successorFlag:
+    #         stack.pop()
+
+    # return []
+
     firstState = problem.getStartState()
     stack = util.Stack()
     stack.push((firstState, []))
-    visited = [firstState]
+    visited = []
     
     while not stack.isEmpty():
         curState, actions = stack.pop()
-        stack.push((curState, actions))
-        
+
         if problem.isGoalState(curState):
             return actions
         
-        successorFlag = False
-        for successor, action, stepCost in problem.getSuccessors(curState):
-            if successor not in visited:
+        if curState not in visited:
+            visited.append(curState)
+            for successor, action, stepCost in problem.getSuccessors(curState):
                 stack.push((successor, actions + [action]))
-                visited = visited + [successor]
-                successorFlag = True
-                break
-
-        if not successorFlag:
-            stack.pop()
     
     return []
     
@@ -119,7 +135,7 @@ def depthFirstSearch(problem: SearchProblem):
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
