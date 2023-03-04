@@ -131,16 +131,47 @@ def depthFirstSearch(problem: SearchProblem):
     
     return []
     
-
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    firstState = problem.getStartState()
+    queue = util.Queue()
+    queue.push((firstState, []))
+    visited = []
     
+    while not queue.isEmpty():
+        curState, actions = queue.pop()
+        
+        if problem.isGoalState(curState):
+            return actions
+
+        if curState not in visited:
+            visited.append(curState)
+            for successor, action, stepCost in problem.getSuccessors(curState):
+                queue.push((successor, actions + [action]))
+    
+    return []
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    firstState = problem.getStartState()
+    pq = util.PriorityQueue()
+    pq.push((firstState, [], 0), 0)
+    visited = []
+
+    while not pq.isEmpty():
+        curState, actions, cost = pq.pop()
+
+        if problem.isGoalState(curState):
+            return actions
+        
+        if curState not in visited:
+            visited.append(curState)
+            for successor, action, stepCost in problem.getSuccessors(curState):
+                pq.push((successor, actions + [action], cost + stepCost), cost + stepCost)
+    
+    return []
 
 def nullHeuristic(state, problem=None):
     """
@@ -152,8 +183,24 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    firstState = problem.getStartState()
+    pq = util.PriorityQueue()
+    pq.push((firstState, [], 0), 0 + heuristic(firstState, problem))
+    visited = []
 
+    while not pq.isEmpty():
+        curState, actions, cost = pq.pop()
+
+        if problem.isGoalState(curState):
+            return actions
+        
+        if curState not in visited:
+            visited.append(curState)
+            for successor, action, stepCost in problem.getSuccessors(curState):
+                totalCost = cost + stepCost
+                pq.push((successor, actions + [action], totalCost), totalCost + heuristic(successor, problem))
+
+    return []
 
 # Abbreviations
 bfs = breadthFirstSearch
