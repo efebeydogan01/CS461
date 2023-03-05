@@ -381,9 +381,18 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     currentPos = state[0]
     "*** YOUR CODE HERE ***"
     heuristic = 0
-    for i in range(len(corners)):
+    cornerList = set()
+
+    for i in range(4):
         if not cornerStatus[i]:
-            heuristic = max(heuristic, util.manhattanDistance(currentPos, corners[i]))
+            cornerList.add(i)
+    
+    while cornerList:
+        d, i = min([(util.manhattanDistance(currentPos, corners[i]), i) for i in cornerList])
+        heuristic += d
+        currentPos = corners[i]
+        cornerList.remove(i)
+
     return heuristic # Default to trivial solution
 
 class AStarCornersAgent(SearchAgent):
