@@ -112,7 +112,6 @@ def depthFirstSearch(problem: SearchProblem):
     #         stack.pop()
 
     # return []
-
     firstState = problem.getStartState()
     stack = util.Stack()
     stack.push((firstState, []))
@@ -197,8 +196,8 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
         if curState not in visited:
             visited.append(curState)
             for successor, action, stepCost in problem.getSuccessors(curState):
-                totalCost = cost + stepCost
-                pq.push((successor, actions + [action], totalCost), totalCost + heuristic(successor, problem))
+                accumulatedCost = cost + stepCost
+                pq.push((successor, actions + [action], accumulatedCost), accumulatedCost + heuristic(successor, problem))
 
     return []
 
