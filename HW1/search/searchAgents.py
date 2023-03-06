@@ -377,9 +377,9 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     """
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
+    "*** YOUR CODE HERE ***"
     cornerStatus = state[1]
     currentPos = state[0]
-    "*** YOUR CODE HERE ***"
     heuristic = 0
     cornerList = set()
 
@@ -487,7 +487,6 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-
     return 0
 
 class ClosestDotSearchAgent(SearchAgent):
