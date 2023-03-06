@@ -87,31 +87,6 @@ def depthFirstSearch(problem: SearchProblem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    # BELOW IS CS202 IMPLEMENTATION BUT DOESN'T WORK
-    # firstState = problem.getStartState()
-    # stack = util.Stack()
-    # stack.push((firstState, []))
-    # visited = [firstState]
-
-    # while not stack.isEmpty():
-    #     curState, actions = stack.pop()
-    #     stack.push((curState, actions))
-
-    #     if problem.isGoalState(curState):
-    #         return actions
-
-    #     successorFlag = False
-    #     for successor, action, stepCost in problem.getSuccessors(curState):
-    #         if successor not in visited:
-    #             stack.push((successor, actions + [action]))
-    #             visited = visited + [successor]
-    #             successorFlag = True
-    #             break
-
-    #     if not successorFlag:
-    #         stack.pop()
-
-    # return []
     firstState = problem.getStartState()
     stack = util.Stack()
     stack.push((firstState, []))
