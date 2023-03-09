@@ -492,7 +492,7 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     if not foodList:
         return 0
 
-    minDist, i = min((mazeDistance(position, foodPos, problem.startingGameState), i) for i, foodPos in enumerate(foodList)) 
+    minDist, i = min((util.manhattanDistance(position, foodPos), i) for i, foodPos in enumerate(foodList)) 
     maxDist = max(mazeDistance(foodList[i], foodPos, problem.startingGameState) for foodPos in foodList)
     return minDist + maxDist
 
