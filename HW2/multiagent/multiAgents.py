@@ -249,10 +249,26 @@ def betterEvaluationFunction(currentGameState: GameState):
     Your extreme ghost-hunting, pellet-nabbing, food-gobbling, unstoppable
     evaluation function (question 5).
 
-    DESCRIPTION: <write something here so we know what you did>
+    DESCRIPTION: penalty for higher food distance, huge penalty for ghosts at 1 unit distance, penalty for pellet distance, reinforcement for chasing scared ghosts
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    pos = currentGameState.getPacmanPosition()
+    food = currentGameState.getFood()
+    ghostStates = currentGameState.getGhostStates()
+    scaredTimes = [ghostState.scaredTimer for ghostState in ghostStates]
+
+    foodList = food.asList()
+    pellets = currentGameState.getCapsules()
+
+    foodDistance = min(manhattanDistance(pos, foodPos) for foodPos in foodList) if foodList else 0
+    ghostsNear = sum(manhattanDistance(pos, ghostPos) <= 1 for ghostPos in currentGameState.getGhostPositions())
+    
+    pelletDistance = min(manhattanDistance(pos, pelletPos) for pelletPos in pellets) if pellets else 0
+    
+    scaredGhostsNear = [scaredTime - manhattanDistance(pos, ghostState.getPosition()) for ghostState, scaredTime in zip(ghostStates, scaredTimes) if scaredTime > 0]
+    maxScaredGhostsNear = max(scaredGhostsNear) if scaredGhostsNear else 0
+
+    return 10*currentGameState.getScore() - foodDistance - 1000*ghostsNear - 2*pelletDistance + 2000*maxScaredGhostsNear
 
 # Abbreviation
 better = betterEvaluationFunction
